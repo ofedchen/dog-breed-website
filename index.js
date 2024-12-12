@@ -32,15 +32,6 @@ let removeFilters = document.getElementById("remove-filters")
 let breedContainer // individual divs for the breeds
 let breedData //the result from API
 
-let favoritesList = []
-
-//Restore favorites from local storage
-
-if (localStorage.getItem("fav") && localStorage.getItem("fav") !== null) {
-    favoritesList = JSON.parse(localStorage.getItem("fav"))
-    console.log(favoritesList)
-}
-
 
 fetch('https://registry.dog/api/v1')
     .then(response => response.json())
@@ -48,6 +39,7 @@ fetch('https://registry.dog/api/v1')
         displayOnPage(result)
         breedData = result.data
     })
+
 
 //DISPLAYS THE BREEDS
 function displayOnPage(result) {
@@ -91,27 +83,6 @@ function displayOnPage(result) {
             }
         }
     }
-}
-
-//FAVORITES
-function addToFavorites(breed, id) {
-    let addToFav = document.getElementById(id).lastChild
-
-    addToFav.addEventListener("click", () => {
-        if (favoritesList.indexOf(breed.id) >= 0) {
-            addToFav.setAttribute("src", "https://img.icons8.com/?size=100&id=85038&format=png&color=000000")
-            favoritesList.splice(favoritesList.indexOf(breed.id), 1)
-        }
-        else {
-            addToFav.setAttribute("src", "https://img.icons8.com/?size=100&id=85138&format=png&color=000000")
-            favoritesList.push(breed.id)
-        }
-
-        localStorage.setItem("fav", JSON.stringify(favoritesList))
-        console.log(localStorage.getItem("fav"))
-    })
-
-
 }
 
 
@@ -221,6 +192,7 @@ removeFilters.addEventListener("click", () => {
 let sizes = document.querySelectorAll("li")
 for (let size of sizes) {
     size.addEventListener("click", () => {
+        searchContainer.innerHTML = ""
         searchResultsH2 = document.createElement("h2")
         searchResultsSection = document.createElement("section")
         searchResultsH2.textContent = size.textContent + " breeds"

@@ -4,20 +4,10 @@ console.log(searchParam)
 
 let breedData
 
-let favoritesList = []
-//Restore favorites from local storage
-
-if (localStorage.getItem("fav") && localStorage.getItem("fav") !== null) {
-    favoritesList = JSON.parse(localStorage.getItem("fav"))
-    console.log(favoritesList)
-}
-
-
 let pageTitle = document.querySelector("title")
 let pageHeading1 = document.querySelector("h1")
 
 let breedInfoSection = document.querySelector("main")
-// let breedInfoSection = document.createElement('section')
 let breedImage = document.createElement('img')
 let breedName = document.querySelector('h2')
 let breedGroup = document.querySelector('h3')
@@ -42,6 +32,7 @@ fetch('https://registry.dog/api/v1')
         breedData = result.data
     })
 
+
 function displayBreedInfo(result, param) {
 
     for (let breed of result.data) {
@@ -52,13 +43,13 @@ function displayBreedInfo(result, param) {
             breedName.textContent = breed.general.name
             breedGroup.textContent = breed.general.group
             breedImage.setAttribute("src", breed.images.large.outdoors)
-            breedHeight.textContent = "Height: ~" + Math.round(breed.general.height/0.39370) + " cm"
-            breedWeight.textContent = "Weight: ~" + Math.round(breed.general.weight*0.453) + " kg"
+            breedHeight.textContent = "Height: ~" + Math.round(breed.general.height / 0.39370) + " cm"
+            breedWeight.textContent = "Weight: ~" + Math.round(breed.general.weight * 0.453) + " kg"
             breedLifespan.textContent = "Lifespan: " + breed.general.lifespan + " years"
             breedDescription.textContent = breed.general.longDescription
 
             let persTraits = breed.general.personalityTraits
-            for(let trait of persTraits){
+            for (let trait of persTraits) {
                 let bTrait = document.createElement("li")
                 breedTraits.appendChild(bTrait)
                 bTrait.textContent = trait
@@ -91,27 +82,6 @@ function displayBreedInfo(result, param) {
         }
 
     }
-}
-
-//FAVORITES
-function addToFavorites(breed, id) {
-    let addToFav = document.getElementById(id).lastChild
-
-    addToFav.addEventListener("click", () => {
-        if (favoritesList.indexOf(breed.id) >= 0) {
-            addToFav.setAttribute("src", "https://img.icons8.com/?size=100&id=85038&format=png&color=000000")
-            favoritesList.splice(favoritesList.indexOf(breed.id), 1)
-        }
-        else {
-            addToFav.setAttribute("src", "https://img.icons8.com/?size=100&id=85138&format=png&color=000000")
-            favoritesList.push(breed.id)
-        }
-
-        localStorage.setItem("fav", JSON.stringify(favoritesList))
-        console.log(localStorage.getItem("fav"))
-    })
-
-
 }
 
 
