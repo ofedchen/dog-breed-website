@@ -57,7 +57,7 @@ function displayOnPage(result) {
 
         breedContainer.setAttribute("id", breed.id)
         // breedContainer.setAttribute("class", breed.id) 
-        breedLink.href = `/breed-page.html?breed_id=${breed.id}` //to open the page with additional info
+        breedLink.href = `https://ofedchen.github.io/dog-breed-website/breed-page.html?breed_id=${breed.id}` //to open the page with additional info
         breedLink.textContent = breed.general.name
         breedGroup.textContent = breed.general.group
         breedImage.setAttribute("src", breed.images.small.studio)
